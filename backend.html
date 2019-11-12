@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Backend Portfolio Management</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>    
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+            crossorigin="anonymous"></script>    
+    <script src="assets/javascript/backend.js"></script>
+
+</head>
+<body>
+    <header class="header-bar">
+
+        <div class="header-container text-center">
+          <span class="myname">Nathan Hill</span><br>
+                    <a href="index.html"><button class="nav-button p-2">About Me</button></a>
+                    <a href="portfolio.html"><button class="nav-button p-2">Portfolio</button></a>
+                    <a href="contact.html"><button class="nav-button p-2">Contact</button></a>
+        </div>
+    </header>
+
+
+    <div class="my-class">
+            <h1 class="display-4 text-center">Back-end portfolio management</h1>
+            <hr>
+    </div>
+
+    <div class="my-class">
+            <form id="login-form">
+                <p>Please log in to see back-end data:</p>
+                <input type="password" id="the-password">
+                <button class="btn btn-secondary m-2" type="submit" id="login-submit">Submit</button>
+            </form>
+            <div class="function-buttons">
+                <button class="btn btn-secondary m-2" id="add-item">Add New</button>
+                <br>
+                <button class="btn btn-secondary m-2" id="logout">Logout</button>
+            </div>
+        </div>
+    </div>
+    <div class="my-class">
+            <form class="portfolio-item-form p-4" id="add-new-item-form">
+                <h1 class="text-center"> Add an Item </h1>
+                <div class='form-group'>
+                    <label for="portfolio-title">Title</label>
+                    <input type='form-text' class="form-control" id='portfolio-title'></div>
+                <div class='form-group'>
+                    <label for="portfolio-image">Image path</label>
+                    <input type='form-text' class="form-control" id='portfolio-image' value="assets/images/">
+                </div>
+                <div class='form-group'>
+                    <label for="portfolio-url">Project URL</label>
+                    <input type='form-text' class="form-control" id='portfolio-url'>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="portfolio-featured">
+                    <label class="form-check-label" for="portfolio-featured">Featured?</label>
+                </div>
+                <br>
+                <p>
+                <button type="submit" class="btn btn-secondary" id="new-portfolio-item">Add New Portfolio Item</button>
+                <button class="btn btn-secondary float-right" id="new-portfolio-close">Close</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div class="my-class">
+            <table class="table" id="portfolio-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Image (with path)</th>
+                        <th>Project URL</th>
+                        <th>Featured</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="portfolio-list">
+                </tbody>
+            </table>
+    </div>
+
+    <div class="my-class">
+                <form id="edit-item-form" class="portfolio-item-form p-4">
+                    <h1 class="text-center">Edit a Portfolio Item</h1>
+                    <div class='form-group'>
+                        <input type='form-text' class="form-control hidden-element" id='edit-data-key' disabled></div>
+        
+                    <div class='form-group'>
+                        <label for="edit-title">Title</label>
+                        <input type='form-text' class="form-control" id='edit-title'>
+                    </div>
+                    <div class='form-group'>
+                        <label for="edit-image">Image path</label>
+                        <input type='form-text' class="form-control" id='edit-image'>
+                    </div>
+                    <div class='form-group'>
+                        <label for="edit-url">Project URL</label>
+                        <input type='form-text' class="form-control" id='edit-url'>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="edit-featured">
+                        <label class="form-check-label" for="edit-featured">Featured?</label>
+                    </div>
+                    <br>
+                    <p>
+                    <button type="submit" class="btn btn-secondary" id="save-changes">Save Changes</button>
+                    <button class="btn btn-secondary float-right" id="close-edit">Close</button>
+                    </p>
+                </form>
+        </div>
+
+    <footer>
+        Copyright &copy 2019 Nathan Hill
+    </footer>
+
+</body>
+</html>
